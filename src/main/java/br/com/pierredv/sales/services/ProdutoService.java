@@ -54,5 +54,11 @@ public class ProdutoService {
 		
 		return ProdutoVO.create(produtoRepository.save(Produto.create(produtoVO)));
 	}
-
+	
+	public void delete(Long id) {
+		var entity = produtoRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+		produtoRepository.delete(entity);
+	}
 }
+
