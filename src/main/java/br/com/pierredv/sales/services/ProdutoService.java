@@ -1,5 +1,7 @@
 package br.com.pierredv.sales.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.pierredv.sales.data.vo.ProdutoVO;
 import br.com.pierredv.sales.entity.Produto;
+import br.com.pierredv.sales.exception.ResourceNotFoundException;
 import br.com.pierredv.sales.repository.ProdutoRepository;
 
 @Service
@@ -24,7 +27,7 @@ public class ProdutoService {
 	
 	public ProdutoVO create(ProdutoVO produtoVO) {
 		ProdutoVO produtoVoRetorno = ProdutoVO.create(produtoRepository.save(Produto.create(produtoVO)));
-		return produtoVO;
+		return produtoVoRetorno;
 	}
 	
 	public Page<ProdutoVO> findAll(Pageable pageable) {
@@ -34,6 +37,22 @@ public class ProdutoService {
 	
 	private ProdutoVO convertToProdutoVO(Produto produto) {
 		return ProdutoVO.create(produto);
+	}
+	
+	public ProdutoVO findById(Long id) {
+		var entity = produtoRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+		return ProdutoVO.create(entity);
+	}
+	
+	public ProdutoVO upadte(ProdutoVO produtoVO) {
+		final Optional<Produto>optiptionalProduto = produtoRepository.findById(produtoVO.getId());
+		
+		if(!optiptionalProduto.isPresent()) {
+			new ResourceNotFoundException("No records found for this ID");
+		}
+		
+		return ProdutoVO.create(produtoRepository.save(Produto.create(produtoVO)));
 	}
 
 }
