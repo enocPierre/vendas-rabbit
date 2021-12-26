@@ -13,21 +13,18 @@ import javax.persistence.Table;
 import org.modelmapper.ModelMapper;
 
 import br.com.pierredv.sales.data.vo.ProdutoVO;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Entity
-@Table(name = "produto")
+
+/*
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+*/
+@Entity
+@Table(name = "produto")
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -45,9 +42,6 @@ public class Produto implements Serializable {
 	@Column(name = "preco", nullable = false, length = 255)
 	private Double preco;
 	
-	public static Produto create(ProdutoVO produtoVO) {
-		return new ModelMapper().map(produtoVO, Produto.class);
-	}
 	
 	public Produto() {
 		
@@ -114,6 +108,9 @@ public class Produto implements Serializable {
 		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
+	public static Produto create(ProdutoVO produtoVO) {
+		return new ModelMapper().map(produtoVO, Produto.class);
+	}
 }
 

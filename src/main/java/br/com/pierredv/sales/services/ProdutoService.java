@@ -12,15 +12,11 @@ import br.com.pierredv.sales.entity.Produto;
 import br.com.pierredv.sales.exception.ResourceNotFoundException;
 import br.com.pierredv.sales.repository.ProdutoRepository;
 
+
+
 @Service
 public class ProdutoService {
 	
-	//private final ProdutoRepository produtoRepository;
-	
-	//@Autowired
-	//public ProdutoService(ProdutoRepository produtoRepository) {
-	//	this.produtoRepository = produtoRepository;
-	//}
 	 
 	@Autowired
      private ProdutoRepository produtoRepository;
@@ -60,5 +56,6 @@ public class ProdutoService {
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 		produtoRepository.delete(entity);
 	}
+	
 }
 
