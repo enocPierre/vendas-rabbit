@@ -5,7 +5,7 @@ server:
     
 spring:
   application:
-    name: sales
+    name: product
   jpa:
     show-sql: false
     hibernate:
